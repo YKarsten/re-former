@@ -1,0 +1,55 @@
+<h1>Make changes to an existing user</h1> 
+
+<%# To run this, enable hashed User attributes in users_controller.rb %>
+<!--
+<form action="/users" method="post" accept-charset="utf-8">
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label for="username">Your name:</label>
+  <input type="text" id="username" name='user[username]'><br><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name='user[email]'><br><br>
+
+  <label for="password">Password</label>
+  <input type="password" id="password" name='user[password]'><br><br>
+
+  <input type="submit" value="Submit">
+</form>
+-->
+
+<%# To run this, enable normal top level User attributes in users_controller.rb %>
+<!--
+<%= form_tag('/users', method: "post") do %>
+    <%= text_field_tag(:username, "Username:") %>
+    <%= email_field_tag(:email, "Email:") %>
+    <%= password_field_tag(:password, "Password:") %>
+    <%= submit_tag(:Submit) %>
+  <% end %>
+-->
+
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%# To run this, enable hashed User attributes in users_controller.rb %>
+ <%= form_with model: @user do |form| %>
+    <%= label_tag(:username, "Username:") %>
+    <%= form.text_field :username, placeholder: "Your user name here" %> <br><br>
+
+    <%= label_tag(:email, "Email:") %>
+    <%= form.email_field :email, value: "example@bar.com" %> <br><br>
+
+    <%= label_tag(:password, "Password:") %>
+    <%= form.password_field :password , placeholder: "super secure pw" %> <br><br>
+
+    <%= submit_tag("Update") %>
+  <% end %>
