@@ -1,5 +1,7 @@
-<!--
 <h1>Create a new user </h1> 
+
+<%# To run this, enable hashed User attributes in users_controller.rb %>
+<!--
 <form action="/users" method="post" accept-charset="utf-8">
 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
@@ -16,9 +18,26 @@
 </form>
 -->
 
+<%# To run this, enable normal top level User attributes in users_controller.rb %>
+<!--
 <%= form_tag('/users', method: "post") do %>
     <%= text_field_tag(:username, "Username:") %>
     <%= email_field_tag(:email, "Email:") %>
     <%= password_field_tag(:password, "Password:") %>
     <%= submit_tag(:Submit) %>
+  <% end %>
+-->
+
+<%# To run this, enable hashed User attributes in users_controller.rb %>
+ <%= form_with model: @user do |form| %>
+    <%= label_tag(:username, "Username:") %>
+    <%= form.text_field :username, placeholder: "Your user name here" %> <br><br>
+
+    <%= label_tag(:email, "Email:") %>
+    <%= form.email_field :email, value: "example@bar.com" %> <br><br>
+
+    <%= label_tag(:password, "Password:") %>
+    <%= form.password_field :password , placeholder: "super secure pw" %> <br><br>
+
+    <%= submit_tag("Submit") %>
   <% end %>
