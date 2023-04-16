@@ -1,6 +1,27 @@
 <h1>Create a new user </h1> 
 
-<%# To run this, enable hashed User attributes in users_controller.rb %>
+<%# Iteration 1 
+Manually written form using top level data. This means the input name IS NOT nested %>
+<!--
+<form action="/users" method="post" accept-charset="utf-8">
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label for="username">Your name:</label>
+  <input type="text" id="username" name='username'><br><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name='email'><br><br>
+
+  <label for="password">Password</label>
+  <input type="password" id="password" name='password'><br><br>
+
+  <input type="submit" value="Submit">
+</form>
+-->
+<%# Iteration 1 end %>
+
+<%# Iteration 2
+Manually written form using nested data. %>
 <!--
 <form action="/users" method="post" accept-charset="utf-8">
 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -17,18 +38,25 @@
   <input type="submit" value="Submit">
 </form>
 -->
+<%# Iteration 2 end %>
 
-<%# To run this, enable normal top level User attributes in users_controller.rb %>
+<%# Iteration 3 
+Railsy Forms with #form_tag
+To run this, enable top level User attributes in users_controller.rb
+#form_tag method defaults to POST%>
 <!--
-<%= form_tag('/users', method: "post") do %>
+<%= form_tag('/users') do %>
     <%= text_field_tag(:username, "Username:") %>
     <%= email_field_tag(:email, "Email:") %>
     <%= password_field_tag(:password, "Password:") %>
     <%= submit_tag(:Submit) %>
   <% end %>
--->
+ -->
 
-<%# To run this, enable hashed User attributes in users_controller.rb %>
+<%# Iteration 4
+Railsy-er Forms with #form_with
+To run this, enable hashed User attributes in users_controller.rb %>
+
  <%= form_with model: @user do |form| %>
     <%= label_tag(:username, "Username:") %>
     <%= form.text_field :username, placeholder: "Your user name here" %> <br><br>
@@ -41,3 +69,16 @@
 
     <%= submit_tag("Submit") %>
   <% end %>
+ 
+  
+  <% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+    <ul>
+      <% @user.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
